@@ -1,1 +1,670 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFL Passive Voice Mastery Lesson</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .timer {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .objectives {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .objectives h3 {
+            color: #4a90e2;
+            margin-bottom: 10px;
+        }
+
+        .reading-passage {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .reading-passage h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .reading-passage p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        .questions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .exercise-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .exercise-item .japanese {
+            background: #fff5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .exercise-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .exercise-input:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        .answer-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .answer-btn:hover {
+            background: #218838;
+        }
+
+        .answer {
+            display: none;
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .answer.show {
+            display: block;
+        }
+
+        .trivia-card {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .trivia-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .trivia-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2d3436;
+        }
+
+        .trivia-answer {
+            display: none;
+            background: rgba(255,255,255,0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #74b9ff);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Mastering Passive Voice 🌸</h1>
+            <p>Interactive EFL Lesson for Japanese Learners</p>
+            <p><strong>Duration:</strong> 40 minutes | <strong>Level:</strong> Intermediate</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="lesson-nav">
+            <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+            <button class="nav-btn" onclick="showSection('reading')">Reading (10 min)</button>
+            <button class="nav-btn" onclick="showSection('conversion')">Conversion (10 min)</button>
+            <button class="nav-btn" onclick="showSection('teacher-qa')">Teacher Q&A (5 min)</button>
+            <button class="nav-btn" onclick="showSection('student-qa')">Student Q&A (5 min)</button>
+            <button class="nav-btn" onclick="showSection('trivia')">Trivia (8 min)</button>
+            <button class="nav-btn" onclick="showSection('wrap-up')">Wrap-up (2 min)</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="section active">
+            <div class="section-header">
+                <h2>📚 Lesson Overview</h2>
+                <span class="timer">⏱️ 40 minutes total</span>
+            </div>
+            
+            <div class="objectives">
+                <h3>🎯 Learning Objectives</h3>
+                <ul>
+                    <li>Master passive voice structure (be + past participle)</li>
+                    <li>Practice converting active sentences to passive voice</li>
+                    <li>Use passive voice in natural conversation</li>
+                    <li>Apply passive voice in cultural and global contexts</li>
+                    <li>Develop confidence in asking and answering questions using passive voice</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>📋 Lesson Structure</h3>
+                <p><strong>1. Reading Exercise (10 min):</strong> Japanese technology and culture passage with comprehension questions</p>
+                <p><strong>2. Conversion Practice (10 min):</strong> Transform 15 Japanese sentences into English passive voice</p>
+                <p><strong>3. Teacher Q&A (5 min):</strong> Answer teacher's passive voice questions</p>
+                <p><strong>4. Student Q&A (5 min):</strong> Translate and ask questions in passive voice</p>
+                <p><strong>5. Cultural Trivia (8 min):</strong> Explore world facts using passive voice</p>
+                <p><strong>6. Wrap-up (2 min):</strong> Review and reflection</p>
+            </div>
+        </div>
+
+        <!-- Reading Section -->
+        <div id="reading" class="section">
+            <div class="section-header">
+                <h2>📖 Reading Exercise</h2>
+                <span class="timer">⏱️ 10 minutes</span>
+            </div>
+
+            <div class="reading-passage">
+                <h3>🏯 Japanese Innovation: From Tradition to Technology</h3>
+                
+                <p>Japan's remarkable transformation is admired by people worldwide. Traditional crafts are still preserved by skilled artisans, while cutting-edge technology is developed by innovative companies. The famous bullet train (Shinkansen) was introduced in 1964 and has been continuously improved since then.</p>
+                
+                <p>Many Japanese traditions are respected and maintained across generations. Tea ceremony is performed with precise movements that have been passed down for centuries. Meanwhile, robots are being designed by Japanese engineers to assist with daily tasks and elderly care.</p>
+                
+                <p>Japanese anime and manga are enjoyed by millions of fans globally. These cultural products are translated into dozens of languages and are watched in countries around the world. The influence of Japanese pop culture can be seen everywhere, from fashion trends that are inspired by Tokyo street style to video games that are played by people of all ages.</p>
+                
+                <p>Environmental consciousness is also promoted by Japanese society. Recycling systems are implemented in every community, and energy-efficient technologies are constantly developed. The concept of "mottainai" (avoiding waste) is taught from childhood and is applied in both personal and business practices.</p>
+            </div>
+
+            <div class="questions">
+                <h3>🤔 Comprehension Questions (Passive Voice Focus)</h3>
+                
+                <div class="question">
+                    <div class="question-number">Question 1:</div>
+                    <p>When was the bullet train introduced in Japan?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer">The bullet train was introduced in 1964.</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 2:</div>
+                    <p>How are traditional Japanese crafts maintained today?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer">Traditional Japanese crafts are still preserved by skilled artisans.</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 3:</div>
+                    <p>What is being developed by Japanese engineers to help with daily life?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer">Robots are being designed by Japanese engineers to assist with daily tasks and elderly care.</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 4:</div>
+                    <p>How widely are Japanese anime and manga enjoyed?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer">Japanese anime and manga are enjoyed by millions of fans globally and are translated into dozens of languages.</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 5:</div>
+                    <p>Where is the concept of "mottainai" taught and applied?</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                    <div class="answer">The concept of "mottainai" is taught from childhood and is applied in both personal and business practices.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversion Exercise Section -->
+        <div id="conversion" class="section">
+            <div class="section-header">
+                <h2>✏️ Sentence Conversion Exercise</h2>
+                <span class="timer">⏱️ 10 minutes</span>
+            </div>
+
+            <div class="objectives">
+                <h3>📝 Instructions</h3>
+                <p>Convert the following Japanese sentences into English passive voice using the structure: <strong>Subject + be + past participle + (by + agent)</strong></p>
+            </div>
+
+            <div class="exercise-grid" id="conversionExercises">
+                <!-- Exercises will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Teacher Q&A Section -->
+        <div id="teacher-qa" class="section">
+            <div class="section-header">
+                <h2>👩‍🏫 Teacher Questions</h2>
+                <span class="timer">⏱️ 5 minutes</span>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Instructions</h3>
+                <p>Answer the following questions using passive voice. Think about your response before revealing the sample answer.</p>
+            </div>
+
+            <div class="questions">
+                <div class="question">
+                    <div class="question-number">Question 1:</div>
+                    <p><strong>Teacher asks:</strong> "What languages are spoken in your country?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Sample Answer</button>
+                    <div class="answer"><strong>Sample response:</strong> "Japanese is spoken by most people in Japan, but English is also taught in schools and is used in international business."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 2:</div>
+                    <p><strong>Teacher asks:</strong> "How is traditional Japanese food prepared?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Sample Answer</button>
+                    <div class="answer"><strong>Sample response:</strong> "Traditional Japanese food is prepared with fresh ingredients and is often served with rice. Sushi is made by skilled chefs and sashimi is cut very precisely."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 3:</div>
+                    <p><strong>Teacher asks:</strong> "What festivals are celebrated in Japan during spring?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Sample Answer</button>
+                    <div class="answer"><strong>Sample response:</strong> "Cherry blossom festivals are celebrated throughout Japan in spring. Hanami parties are organized by families and friends under the blooming trees."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 4:</div>
+                    <p><strong>Teacher asks:</strong> "How are Japanese companies known internationally?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Sample Answer</button>
+                    <div class="answer"><strong>Sample response:</strong> "Japanese companies are known for their quality products and innovation. Cars are manufactured by companies like Toyota and Honda, and electronics are produced by Sony and Panasonic."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 5:</div>
+                    <p><strong>Teacher asks:</strong> "What changes have been made to Japanese society in recent decades?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Sample Answer</button>
+                    <div class="answer"><strong>Sample response:</strong> "Many changes have been made to Japanese society. Technology has been integrated into daily life, and more opportunities have been created for women in the workplace."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Q&A Section -->
+        <div id="student-qa" class="section">
+            <div class="section-header">
+                <h2>🗣️ Student Questions</h2>
+                <span class="timer">⏱️ 5 minutes</span>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Instructions</h3>
+                <p>Translate these Japanese questions into English using passive voice, then ask your teacher!</p>
+            </div>
+
+            <div class="questions">
+                <div class="question">
+                    <div class="question-number">Question 1:</div>
+                    <div class="japanese">この映画はいつ作られましたか？</div>
+                    <p><strong>Translate to:</strong> "When was this movie made?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Teacher's Response</button>
+                    <div class="answer"><strong>Teacher might say:</strong> "This movie was made in 2019 by a famous director. It was filmed in various locations around the world."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 2:</div>
+                    <div class="japanese">あなたの国では何時に夕食が食べられますか？</div>
+                    <p><strong>Translate to:</strong> "What time is dinner eaten in your country?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Teacher's Response</button>
+                    <div class="answer"><strong>Teacher might say:</strong> "In my country, dinner is usually eaten between 6 and 8 PM. It's often shared with family members."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 3:</div>
+                    <div class="japanese">その建物はいつ建てられましたか？</div>
+                    <p><strong>Translate to:</strong> "When was that building constructed?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Teacher's Response</button>
+                    <div class="answer"><strong>Teacher might say:</strong> "That building was constructed in the 1960s. It was designed by a famous architect and is still admired today."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 4:</div>
+                    <div class="japanese">この曲は誰によって歌われていますか？</div>
+                    <p><strong>Translate to:</strong> "Who is this song sung by?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Teacher's Response</button>
+                    <div class="answer"><strong>Teacher might say:</strong> "This song is sung by a popular artist from the 1980s. It was recorded in a famous studio and is still played on the radio."</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 5:</div>
+                    <div class="japanese">あなたの国では英語はどのように教えられていますか？</div>
+                    <p><strong>Translate to:</strong> "How is English taught in your country?"</p>
+                    <button class="answer-btn" onclick="toggleAnswer(this)">Teacher's Response</button>
+                    <div class="answer"><strong>Teacher might say:</strong> "English is taught from elementary school in my country. It's usually taught by trained teachers and is considered an important subject."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trivia Section -->
+        <div id="trivia" class="section">
+            <div class="section-header">
+                <h2>🌍 World & Cultural Trivia</h2>
+                <span class="timer">⏱️ 8 minutes</span>
+            </div>
+
+            <div class="objectives">
+                <h3>🎯 Instructions</h3>
+                <p>Click on each trivia card to reveal fascinating facts about world culture and history - all using passive voice!</p>
+            </div>
+
+            <div id="triviaCards">
+                <!-- Trivia cards will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Wrap-up Section -->
+        <div id="wrap-up" class="section">
+            <div class="section-header">
+                <h2>🎉 Lesson Wrap-up</h2>
+                <span class="timer">⏱️ 2 minutes</span>
+            </div>
+
+            <div class="objectives">
+                <h3>📝 What We Learned Today</h3>
+                <ul>
+                    <li><strong>Passive Voice Structure:</strong> Subject + be + past participle + (by + agent)</li>
+                    <li><strong>Usage:</strong> Focus on the action or result rather than who performs the action</li>
+                    <li><strong>Cultural Application:</strong> Describing traditions, innovations, and cultural practices</li>
+                    <li><strong>Conversation Practice:</strong> Asking and answering questions naturally</li>
+                </ul>
+            </div>
+
+            <div class="objectives">
+                <h3>🏠 Homework Suggestion</h3>
+                <p>Practice describing your daily routine using passive voice. For example: "Breakfast is eaten at 7 AM," "The news is watched every morning," "Messages are sent to friends throughout the day."</p>
+            </div>
+
+            <div class="completion-message">
+                <h2>🌟 Excellent Work! 🌟</h2>
+                <p>You have completed the Passive Voice Mastery lesson!</p>
+                <p>Keep practicing and you'll master passive voice in no time!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Conversion exercises data
+        const conversionExercises = [
+            { japanese: "彼らは新しいレストランを開きました。", english: "A new restaurant was opened by them." },
+            { japanese: "学生たちは宿題を完成させました。", english: "The homework was completed by the students." },
+            { japanese: "シェフは特別な料理を作りました。", english: "A special dish was prepared by the chef." },
+            { japanese: "観光客は美しい庭園を訪れました。", english: "The beautiful garden was visited by tourists." },
+            { japanese: "アーティストはこの絵を描きました。", english: "This painting was created by the artist." },
+            { japanese: "会社は新しい製品を発売します。", english: "A new product will be launched by the company." },
+            { japanese: "先生は学生に英語を教えています。", english: "English is being taught to students by the teacher." },
+            { japanese: "研究者たちは重要な発見をしました。", english: "An important discovery was made by researchers." },
+            { japanese: "彼女は美しい歌を歌いました。", english: "A beautiful song was sung by her." },
+            { japanese: "建築家は新しいビルを設計しました。", english: "A new building was designed by the architect." },
+            { japanese: "農家は新鮮な野菜を栽培しています。", english: "Fresh vegetables are grown by farmers." },
+            { japanese: "彼らは古い本を図書館で見つけました。", english: "Old books were found in the library by them." },
+            { japanese: "職人は伝統的な工芸品を作ります。", english: "Traditional crafts are made by artisans." },
+            { japanese: "子どもたちは公園で遊んでいます。", english: "The park is being played in by children." },
+            { japanese: "彼は重要なメッセージを送りました。", english: "An important message was sent by him." }
+        ];
+
+        // Trivia data
+        const triviaData = [
+            {
+                question: "Which famous monument was built in India as a symbol of love?",
+                answer: "The Taj Mahal was built in India by Emperor Shah Jahan as a symbol of love for his wife. It was completed in 1653 and is visited by millions of tourists every year."
+            },
+            {
+                question: "What writing system was invented by the ancient Egyptians?",
+                answer: "Hieroglyphics were invented by the ancient Egyptians around 3200 BC. These symbols were carved into stone and were used to record important events and religious texts."
+            },
+            {
+                question: "Which popular dance originated in Argentina?",
+                answer: "The tango was originated in Argentina in the late 19th century. It was influenced by African, European, and indigenous music and is now danced worldwide."
+            },
+            {
+                question: "What famous wall was constructed in China?",
+                answer: "The Great Wall of China was constructed over many centuries by different dynasties. It was built to protect against invasions and stretches over 21,000 kilometers."
+            },
+            {
+                question: "Which language is spoken by the most people as a native language?",
+                answer: "Mandarin Chinese is spoken by over 900 million people as a native language. It is taught in schools across China and is increasingly learned by people worldwide."
+            },
+            {
+                question: "What traditional ceremony is performed in Japan?",
+                answer: "The tea ceremony is performed in Japan as a traditional art form. It was developed over centuries and is characterized by precise movements and respect for nature."
+            },
+            {
+                question: "Which ancient city was buried by a volcanic eruption?",
+                answer: "Pompeii was buried by Mount Vesuvius in 79 AD. The city was preserved under volcanic ash and was rediscovered by archaeologists in the 18th century."
+            },
+            {
+                question: "What musical instrument was invented in Scotland?",
+                answer: "The bagpipes were invented in Scotland and are played at traditional celebrations. They were originally used by shepherds and are now associated with Scottish culture worldwide."
+            },
+            {
+                question: "Which sport was first played in England?",
+                answer: "Football (soccer) was first played in England in the 19th century. The rules were standardized by English schools and the sport is now played in every country."
+            },
+            {
+                question: "What ancient wonder was located in Alexandria?",
+                answer: "The Lighthouse of Alexandria was built in ancient Egypt around 280 BC. It was considered one of the Seven Wonders of the Ancient World and was destroyed by earthquakes."
+            }
+        ];
+
+        // Initialize the lesson
+        let currentSection = 'overview';
+        let completedSections = new Set();
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to current nav button
+            event.target.classList.add('active');
+
+            // Track completion
+            completedSections.add(currentSection);
+            currentSection = sectionId;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalSections = 7;
+            const progress = (completedSections.size / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
